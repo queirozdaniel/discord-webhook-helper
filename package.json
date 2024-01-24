@@ -1,7 +1,11 @@
 {
-  "name": "nuxt-app",
+  "name": "discord-webhook-helper",
   "private": true,
   "type": "module",
+  "author": {
+    "name": "Daniel Queiroz",
+    "email": "danielqz.dev@gmail.com"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -12,6 +16,18 @@
   "devDependencies": {
     "nuxt": "^3.9.3",
     "vue": "^3.4.14",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "@nuxtjs/tailwindcss": "^6.10.4",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "daisyui": "^4.5.0",
+    "nuxt-icon": "^0.6.8",
+    "theme-change": "^2.5.0",
+    "vue-uuid": "^3.0.0"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
+    "@vueuse/nuxt": "^10.7.1",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1"
   }
 }
