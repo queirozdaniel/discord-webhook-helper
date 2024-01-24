@@ -1,58 +1,52 @@
 <template>
-  <div class="my-10">
-    <h1 class="text-2xl">Crie seus personagens</h1>
-    <div class="mt-10 flex gap-4">
-      <input
-        v-model="actor.name"
-        type="text"
-        placeholder="Informe um nome"
-        class="input input-bordered input-primary w-full max-w-screen-lg"
-      />
-      <input
-        v-model="actor.avatarUrl"
-        type="url"
-        placeholder="Cole a url da imagem"
-        class="input input-bordered input-primary w-full max-w-screen-lg"
-      />
-      <button
-        class="btn btn-primary"
-        :disabled="!canUpdate"
-        @click="addActor()"
-      >
-        Salvar
-      </button>
-    </div>
-    <div class="mt-10">
-      <p class="text-xl mb-4">
-        {{ actors.length == 0 ? "Previa:" : "Seus personagens:" }}
-      </p>
-      <div class="flex flex-row flex-wrap gap-3">
-        <actor-preview
-          :key="actor.name"
-          :name="actor.name"
-          :image="actor.avatarUrl"
-          :id="actor.id"
-        ></actor-preview>
+  <div class="my-8">
+    <h1 class="text-2xl">Crie seus personagens aqui</h1>
 
-        <actor-preview
-          v-for="actor of actors"
-          :key="actor.name"
+    <div class="flex gap-3 flex-col sm:flex-row mt-8 mb-4">
+      <div class="flex flex-1 gap-4 flex-col justify-between">
+        <input
+          v-model="actor.name"
+          type="text"
+          placeholder="Informe um nome"
+          class="input input-bordered input-primary"
+        />
+        <input
+          v-model="actor.avatarUrl"
+          type="url"
+          placeholder="Cole a url da imagem"
+          class="input input-bordered input-primary"
+        />
+      </div>
+      <div class="flex-2">
+        <actor-preview :key="actor.name"
           :name="actor.name"
           :image="actor.avatarUrl"
           :id="actor.id"
         ></actor-preview>
       </div>
     </div>
+    <button class="btn btn-primary w-full"
+      :disabled="!canUpdate"
+      @click="addActor()"
+      >
+      Adicionar Personagem
+    </button>
+
+    <p class="text-2xl my-8">
+      Seus Personagens:
+    </p>
+    <actors-list class="pb-8" ></actors-list>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { Actor } from "~/types";
+
 definePageMeta({
   middleware: ["configs"],
 });
 
-import type { Actor } from "~/types";
-
+// data | store
 const { actors, createActor } = useDiscordStore();
 
 const actor = reactive<Actor>({
@@ -61,6 +55,10 @@ const actor = reactive<Actor>({
   name: "",
 });
 
+const canUpdate = ref(false);
+const validUrl = ref(false);
+
+// methods
 const addActor = async () => {
   createActor(actor);
   actor.id = "";
@@ -68,9 +66,8 @@ const addActor = async () => {
   actor.avatarUrl = "";
 };
 
-const canUpdate = ref(false);
-const validUrl = ref(false);
 
+// whatches
 watch(actor, (newValue) => {
   const url = actor.avatarUrl.match(/(https?:\/\/[^\s]+)/g);
   if (url?.[0]) {
@@ -82,11 +79,4 @@ watch(actor, (newValue) => {
   canUpdate.value = actor.name.length > 3 && validUrl.value;
 });
 
-// watch(validUrl, (value) => {
-//   if (value) {
-//     previews.value = [actor, ...actors];
-//   } else {
-//     previews.value = [...actors];
-//   }
-// });
 </script>

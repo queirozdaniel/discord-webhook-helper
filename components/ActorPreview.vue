@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-lg border border-primary-100 p-3 bg-base-300 flex justify-between min-w-96 max-w-96 flex-row"
+    class="rounded-lg border border-primary-100 p-3 bg-base-300 flex justify-between min-w-96 sm:max-w-96 flex-row"
   >
     <div class="avatar">
       <div
@@ -22,14 +22,9 @@
     <span
       v-if="id === '' && !readOnly"
       class="indicator-item badge badge-primary items-end"
-      >new</span
     >
-    <span
-      v-if="id !== '' && !readOnly"
-      class="cursor-pointer font-bold"
-      @click="remove()"
-      >X</span
-    >
+      Preview
+    </span>
     <span v-if="readOnly"></span>
   </div>
 </template>
