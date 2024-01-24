@@ -1,7 +1,7 @@
 <template>
   <div class="px-4">
     <div class="label">
-      <span class="label-text">Personagem:</span>
+      <span class="label-text">Personagens:</span>
     </div>
     <ul
       class="flex flex-row flex-wrap gap-3 menu p-2 shadow bg-base-300 rounded-md"

@@ -35,7 +35,7 @@
     <p class="text-2xl my-8">
       Seus Personagens:
     </p>
-    <actors-list class="pb-8" ></actors-list>
+    <actors-table class="pb-8" ></actors-table>
   </div>
 </template>
 
