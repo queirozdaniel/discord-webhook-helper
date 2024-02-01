@@ -1,5 +1,6 @@
 <template>
   <div
+    :class="{'bg-transparent':configStore.isTransparent}"
     class="bg-base-300 min-w-64 rounded-md py-8 px-6"
     ref="el"
     :style="style"
@@ -14,18 +15,13 @@
     <div class="form-control mt-4">
       <label class="label cursor-pointer">
         <span class="label-text">
-          Usando
-          {{
-            configStore.storageType === "localStorage"
-              ? "LocalStorage"
-              : "SessionStorage"
-          }}</span
+          Está {{ configStore.isTransparent ? "Transparente" : "Visivel" }}</span
         >
         <input
           type="checkbox"
           class="toggle toggle-sm ml-4"
           checked
-          @click="updateStorageType()"
+          @click="updateTransparency()"
         />
       </label>
     </div>
@@ -71,8 +67,8 @@ const el = ref<HTMLElement | null>(null);
 
 const themes = ref(["dark", "night", "synthwave", "coffee"]);
 
-const updateStorageType = () => {
-  configStore.changeStorageType();
+const updateTransparency = () => {
+  configStore.changeTransparency();
 };
 
 const updateAnonimous = () => {

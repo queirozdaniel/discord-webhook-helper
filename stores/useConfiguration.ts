@@ -5,13 +5,13 @@ export const useConfigurationStore = defineStore('configs', {
   state: () => {
     const theme = ref("dark")
     const position = ref({ x: 980, y: 460 })
-    const storageType = ref<StorageType>("localStorage")
+    const transparent = ref(false)
     const anonymous = ref(false)
-    return { position, storageType, anonymous, theme }
+    return { position, transparent, anonymous, theme }
   },
   getters: {
     getPosition: (state) => state.position,
-    getStorageType: (state) => state.storageType,
+    isTransparent: (state) => state.transparent,
     isAnonymous: (state) => state.anonymous,
     getTheme: (state) => state.theme
   },
@@ -25,13 +25,8 @@ export const useConfigurationStore = defineStore('configs', {
     changeAnonymous() {
         this.anonymous = !this.anonymous
     },
-    changeStorageType() {
-        if(this.storageType === "localStorage") {
-            this.storageType = "sessionStorage"
-        } else {
-            this.storageType = "localStorage"
-        }
-        useStorageChange(this.storageType)
+    changeTransparency() {
+      this.transparent = !this.transparent
     },
     updateTheme(newTheme: string) {
       this.theme = newTheme
