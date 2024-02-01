@@ -1,10 +1,13 @@
-export type DiscordMessage = {
+export type Message = {
     content: string
-    embeds: string | null
     username: string,
     avatar_url: string,
-    attachments: []
 }
+
+export type DiscordMessage = {
+    embeds: string | null
+    attachments: []
+} & Message
 
 export type Actor = {
     id: string,

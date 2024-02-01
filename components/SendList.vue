@@ -1,44 +1,13 @@
 <template>
     <ul class="flex flex-col flex-wrap gap-3">
-      <li class="min-w-20" v-for="actor of store.getActors" :key="actor.id">
-        <div class="flex gap-4">
-          <span class="avatar">
-            <div v-if="configStore.isAnonymous" class="skeleton w-12 rounded-full shrink-0"></div>
-            <div v-else class="w-12 rounded-full">
-              <img :src="actor.avatarUrl" />
-            </div>
-          </span>
-          <div>
-            <p class="font-bold">{{ configStore.isAnonymous ? safeName(actor.name) : actor.name }} 
-                <span class="bot-bg badge badge-primary">BOT</span> 
-                <span class="text-xs font-light date"> Today at {{ time() }} AM</span>
-            </p>
-            <p class="text-sm">djansdajnsdk</p>
-          </div>
-        </div>
+      <li class="min-w-20" v-for="(message, index) of messageStore.getMessages" :key="index + message.username">
+        <send-message :avatar_url="message.avatar_url" :name="message.username" :content="message.content"></send-message>
       </li>
     </ul>
 </template>
 
 <script lang="ts" setup>
-
-const store = useDiscordStore()
-const configStore = useConfigurationStore()
-
-const time = () => {
-    return new Date().getHours() +":" +new Date().getMinutes()
-}
-
-const safeName = (name: string) => {
-  return name
-    .split(" ")
-    .map((value) => {
-      let size = value.length;
-      return value.charAt(0) + "#".repeat(size - 1);
-    })
-    .join(" ");
-};
-
+const messageStore = useMessagesStore()
 </script>
 
 <style scoped>

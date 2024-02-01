@@ -14,23 +14,21 @@
           ></textarea>
           <div class="join mt-4">
             <button class="btn btn-primary w-1/3 join-item">Adicionar</button>
-            <button class="btn btn-accent w-1/3 join-item" :disabled="!canSendMessage"  @click="sendMessage()">Enviar Agora</button>
-            <button class="btn btn-secondary w-1/3 join-item" :disabled="!canSendMessage" @click="sendMessage(true)">Enviar +2 min</button>
+            <button class="btn btn-accent w-1/3 join-item" :disabled="!canSendMessage"  @click="sendMessages()">Enviar Agora</button>
+            <button class="btn btn-secondary w-1/3 join-item" :disabled="!canSendMessage" @click="sendMessages(true)">Enviar +2 min</button>
           </div>
         </label>
         <select-actor></select-actor>
       </div>
       <div class="divider divider-horizontal">#</div>
-      <div class="grid flex-grow-0 max-w-360px discord-bg card bg-base-300 rounded-box place-items-center">
+      <div class="grid flex-grow-0 max-w-360px discord-bg card bg-base-300 rounded-box">
         <div class="p-4 flex flex-col gap-2 ">
-          <actor-preview
-            :id="store.selectedActor?.id"
-            :name="store.selectedActor?.name"
-            :image="store.selectedActor?.avatarUrl"
-            :message="message"
-            :readOnly="true"
-          />
           <send-list></send-list>
+          <send-message
+            :avatar_url="store.selectedActor?.avatarUrl" 
+            :name="store.selectedActor?.name" 
+            :content="message">
+          </send-message>
         </div>
       </div>
     </div>
@@ -38,6 +36,7 @@
 </template>
 
 <script setup lang="ts">
+
 definePageMeta({
   middleware: ["configs"],
 });
@@ -53,7 +52,7 @@ const canSendMessage = computed(() => {
   );
 });
 
-const sendMessage = (delay: boolean = false) => {
+const sendMessages = (delay: boolean = false) => {
   useDiscordWebhook(message.value, delay);
   message.value = "";
   store.selectAnActor("");
