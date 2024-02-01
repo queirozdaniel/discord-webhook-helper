@@ -14,8 +14,8 @@
           ></textarea>
           <div class="join mt-4">
             <button class="btn btn-primary w-1/3 join-item" :disabled="!canSendMessage"  @click="addMessageToQueue()">Adicionar</button>
-            <button class="btn btn-accent w-1/3 join-item" :disabled="!canSendMessage"  @click="sendMessages()">Enviar Agora</button>
-            <button class="btn btn-secondary w-1/3 join-item" :disabled="!canSendMessage" @click="sendMessages(true)">Enviar +2 min</button>
+            <button class="btn btn-accent w-1/3 join-item" :disabled="!canSendMessage && messageStore.getMessages.length == 0 "  @click="sendMessages()">Enviar Agora</button>
+            <button class="btn btn-secondary w-1/3 join-item" :disabled="!canSendMessage && messageStore.getMessages.length == 0 " @click="sendMessages(true)">Enviar +2 min</button>
           </div>
         </label>
         <select-actor></select-actor>
@@ -78,7 +78,7 @@ const addMessageToQueue = () => {
 }
 
 const sendMessages = (delay: boolean = false) => {
-  if(messageStore.getMessages.length == 0) {
+  if(messageStore.getMessages.length == 0 || canSendMessage) {
     addMessageToQueue()
   }
   useDiscordWebhook(delay);

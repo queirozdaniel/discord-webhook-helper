@@ -5,7 +5,7 @@ export default async (delay: boolean = false) => {
     const store = useDiscordStore()
     const messageStore = useMessagesStore()
 
-    messageStore.getMessages.forEach( async (message) => {
+    messageStore.getMessages.reverse().forEach(async (message) => {
         const body: DiscordMessage = {
             content: message.content,
             embeds: null,
@@ -30,5 +30,7 @@ export default async (delay: boolean = false) => {
            return todo
        }
     })
+
+    messageStore.cleanMessage()
     
 };
