@@ -15,7 +15,7 @@
       class="flex flex-col overflow-hidden whitespace-nowrap text-ellipsis justify-center gap-4"
     >
       <p class="text-3xl font-semibold">
-        {{ (configStore.isAnonymous ? safeName : name) || "Nome" }}
+        {{ (configStore.isAnonymous ? safeName(name) : name) || "Nome" }}
       </p>
       <p>{{ message }}</p>
     </div>
@@ -65,13 +65,13 @@ const remove = () => {
   });
 };
 
-const safeName = computed(() => {
-  return props.name
+const safeName = (name: string) => {
+  return name.length == 0 ? name : name
     .split(" ")
     .map((value) => {
       let size = value.length;
       return value.charAt(0) + "#".repeat(size - 1);
     })
     .join(" ");
-});
+};
 </script>

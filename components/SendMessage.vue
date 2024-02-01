@@ -2,7 +2,7 @@
     <div class="flex gap-4">
         <span class="avatar">
             <div v-if="configStore.isAnonymous" class="skeleton w-12 rounded-full shrink-0"></div>
-            <div v-else class="w-12 rounded-full">
+            <div v-else class="w-12 h-12 rounded-full">
                 <img :src="avatar_url" />
             </div>
         </span>
@@ -11,7 +11,7 @@
                 <span class="bot-bg badge badge-primary">BOT</span> 
                 <span class="text-xs font-light date"> Today at {{ time() }} AM</span>
             </p>
-            <p class="text-sm">{{ content }}</p>
+            <p class="text-sm break-words w-full">{{ content }}</p>
         </div>
     </div>
 </template>
@@ -38,7 +38,7 @@ const time = () => {
 }
 
 const safeName = (name: string) => {
-  return name
+  return name.length == 0 ? name : name 
     .split(" ")
     .map((value) => {
       let size = value.length;
@@ -64,5 +64,12 @@ const safeName = (name: string) => {
     vertical-align: baseline;
     text-transform: uppercase;
 }
-
+.content {
+    font-size: clamp(0.875rem, 0.3043rem + 3.4783vw, 0.875rem);
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    line-height: 1.375;
+    text-rendering: optimizelegibility;
+    text-size-adjust: 100%;
+}
 </style>
