@@ -3,18 +3,22 @@ import { type Message } from '~/types'
 
 export const useMessagesStore = defineStore('messages', {
   state: () => {
-    const messages = ref<Message[]>([])
-    return { messages }
+    const position = ref(0)
+    const messages = ref<{ position: number, message: Message }[]>([])
+    return { messages, position }
   },
   getters: { 
-    getMessages: (state) => state.messages,
+    getPosition: (state) => state.position,
+    getMessages: (state) => state.messages.map(item => item.message),
+    getMessagesToSend: (state) => state.messages,
   },
   actions: {
     addMessage(message: Message) {
         this.messages = [
-            ...this.messages,
-            message
+          ...this.messages,
+          { position: this.position,  message }
         ]
+        this.position += 1
     },
     cleanMessage() {
         this.messages = []

@@ -5,7 +5,9 @@ export default async (delay: boolean = false) => {
     const store = useDiscordStore()
     const messageStore = useMessagesStore()
 
-    messageStore.getMessages.reverse().forEach(async (message) => {
+    messageStore.getMessagesToSend.sort((itemA, itemB) => {
+        return itemA.position < itemB.position ? 0 : 1 
+    }).map(item => item.message).forEach(async (message) => {
         const body: DiscordMessage = {
             content: message.content,
             embeds: null,
