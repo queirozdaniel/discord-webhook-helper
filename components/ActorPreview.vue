@@ -70,7 +70,7 @@ const safeName = computed(() => {
     .split(" ")
     .map((value) => {
       let size = value.length;
-      return value.charAt(0) + "#".repeat(size);
+      return value.charAt(0) + "#".repeat(size - 1);
     })
     .join(" ");
 });

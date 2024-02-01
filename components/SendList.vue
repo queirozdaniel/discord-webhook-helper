@@ -9,7 +9,7 @@
             </div>
           </span>
           <div>
-            <p class="font-bold">{{ configStore.isAnonymous ? "safeName(actor.name)" : actor.name }} 
+            <p class="font-bold">{{ configStore.isAnonymous ? safeName(actor.name) : actor.name }} 
                 <span class="bot-bg badge badge-primary">BOT</span> 
                 <span class="text-xs font-light date"> Today at {{ time() }} AM</span>
             </p>
@@ -28,6 +28,16 @@ const configStore = useConfigurationStore()
 const time = () => {
     return new Date().getHours() +":" +new Date().getMinutes()
 }
+
+const safeName = (name: string) => {
+  return name
+    .split(" ")
+    .map((value) => {
+      let size = value.length;
+      return value.charAt(0) + "#".repeat(size - 1);
+    })
+    .join(" ");
+};
 
 </script>
 
